@@ -1,0 +1,6 @@
+﻿  game.cpp
+C:\Users\96241\OneDrive\C语言\程序\五子棋\Project1\game.cpp(28,42): warning C4474: printf: 格式字符串中传递的参数太多
+C:\Users\96241\OneDrive\C语言\程序\五子棋\Project1\game.cpp(28,42): message : 占位符和其参数预计 1 可变参数，但提供的却是 3 参数
+  源.cpp
+  正在生成代码...
+  Project1.vcxproj -> C:\Users\96241\OneDrive\C语言\程序\五子棋\x64\Debug\Project1.exe
