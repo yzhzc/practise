@@ -9,6 +9,24 @@ void Swap(HPDataType* p1, HPDataType* p2)
 	*p2 = tmp;
 }
 
+//将单位堆内大数上升
+void MoreAdjustUp(HPDataType* a, int child)
+{
+	int parent = (child - 1) / 2;
+	while (child > 0)
+	{
+		if (a[child] > a[parent])
+		{
+			Swap(&a[child], &a[parent]);
+			child = parent;
+			parent = (child - 1) / 2;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
 
 //将单位堆内小数上升
 void LessAdjustUp(HPDataType* a, int child)
@@ -136,7 +154,25 @@ void HeapDown(Heap* php)
 //销毁堆
 void HeapDestory(Heap* php);
 
-//插入节点
+//大堆插入节点
+void MoreHeapPush(Heap* php, HPDataType x)
+{
+	assert(php);
+	if (php->_size == php->_capacity)
+	{
+		php->_capacity *= 2;
+		HPDataType* tmp = (HPDataType*)realloc(php->_a, sizeof(HPDataType) * php->_capacity);
+		if (tmp != NULL)
+		{
+			php->_a = tmp;
+		}
+	}
+	php->_a[php->_size] = x;
+	MoreAdjustUp(php->_a, php->_size);
+	php->_size++;
+}
+
+//小堆插入节点
 void LessHeapPush(Heap* php, HPDataType x)
 {
 	assert(php);

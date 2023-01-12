@@ -29,9 +29,12 @@ void MoreHeapInit(Heap* php, HPDataType* a, int n);
 //大堆升序排序
 void HeapRise(Heap* php);
 
-
-//插入节点
+//大堆插入节点
+void MoreHeapPush(Heap* php, HPDataType x);
+//小堆插入节点
 void LessHeapPush(Heap* php, HPDataType x);
+
+
 //删除节点
 void HeapPop(Heap* php);
 //获取堆顶数据
