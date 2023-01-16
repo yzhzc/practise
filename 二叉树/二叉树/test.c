@@ -14,7 +14,7 @@ int main()
 
 	A->_left = B;
 	A->_right = C;
-	B->_left = NULL;
+	B->_left = D;
 	B->_right = E;
 
 

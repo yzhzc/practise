@@ -112,7 +112,7 @@ int BinaryTreeComplete(BTNode* root)
 		BTNode* front = QueueFront(&q);
 		QueuePop(&q);
 
-		if (front == NULL)
+		if (front)
 			break;
 
 		QueuePush(&q, front->_left);
@@ -121,9 +121,13 @@ int BinaryTreeComplete(BTNode* root)
 	while (!QueueEmpty(&q))
 	{
 		BTNode* front = QueueFront(&q);
-		if (front != NULL)
-			return 0;
 
+		if (front != NULL)
+		{
+			QueueDestory(&q);
+			return 0;
+		}
+			
 		QueuePop(&q);
 	}
 	QueueDestory(&q);
