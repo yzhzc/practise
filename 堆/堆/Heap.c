@@ -134,7 +134,7 @@ void HeapRise(Heap* php)
 	while (end > 0)
 	{
 		Swap(&php->_a[0], &php->_a[end]);
-		MoreAdjustDown(php->_a, end + 1, 0);
+		MoreAdjustDown(php->_a, end, 0);
 		end--;
 	}
 }
@@ -146,7 +146,7 @@ void HeapDown(Heap* php)
 	while (end > 0)
 	{
 		Swap(&php->_a[0], &php->_a[end]);
-		LessAdjustDown(php->_a, end + 1, 0);
+		LessAdjustDown(php->_a, end, 0);
 		end--;
 	}
 }
