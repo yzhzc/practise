@@ -17,7 +17,7 @@ void SelectSort(int* a, int n);
 
 //∂—≈≈–Ú
 void ADjustDown(int* a, int n, int root);
-void HeapSort(int* a, int n);
+void HeapRiseSort(int* a, int n);
 
 //√∞≈›≈≈–Ú
 void BubbleSort(int* a, int n);
@@ -41,3 +41,6 @@ void MergeSortNonR(int* a, int n);
 
 //º∆ ˝≈≈–Ú
 void CountSort(int* a, int n);
+
+
+void PrintArrway(int* a, int n);
