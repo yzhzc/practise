@@ -1,4 +1,5 @@
 #include"Sort.h"
+#include"Stack.h"
 
 //交换
 void Swap(int* p1, int* p2)
@@ -216,7 +217,7 @@ int GetMidIndex(int* a, int begin, int end)
 		}
 	}
 }
-
+//左右指针法
 int PartSort1(int* a, int begin, int end)
 {
 	//三数取中与末尾数交换
@@ -242,16 +243,64 @@ int PartSort1(int* a, int begin, int end)
 
 	return begin;
 }
+
 //快速排序 挖坑法
-int PartSort2(int* a, int left, int right);
+int PartSort2(int* a, int begin, int end)
+{
+	assert(a);
+	//三数取中与末尾数交换
+	int midIndex = GetMidIndex(a, begin, end);
+	Swap(&a[end], &a[midIndex]);
+	//先将尾数提取出来，则末尾是空的坑位
+	int key = a[end];
+	while (begin < end)
+	{
+		//找到前方比key大的数
+		while (begin < end && a[begin] <= key)
+		{
+			begin++;
+		}
+		//将找的数填入坑中；
+		a[end] = a[begin];
+		while (begin < end && a[end] >= key)
+		{
+			end--;
+		}
+		a[begin] = a[end];
+	}
+	//前指针相遇后指针，因为后指针所在位置是坑，直接将key填入；
+	a[begin] = key;
+}
+
 //快速排序 前后指针法
-int PartSort3(int* a, int left, int right);
+int PartSort3(int* a, int begin, int end)
+{
+	assert(a);
+	int key = a[end];
+	int cur = begin;
+	int prev = begin - 1;
+	while (cur <= end)
+	{
+		if (a[cur] <= key && ++prev != cur)
+		{
+			Swap(&a[prev], &a[cur]);
+		}
+		cur++;
+	}
+
+	return prev;
+}
 void QuickSort(int* a, int left, int right)
 {
 	assert(a);
-	if (left < right)
+	if (left >= right)
+		return;
+
+	//大于10个数继续递归
+	if ((right - left + 1) > 10)
 	{
-		int div = PartSort1(a, left, right);
+		//传递区间末尾的数，将其放到这段数组正确的位置；
+		int div = PartSort3(a, left, right);
 		//分成 [left , div - 1] 和 [div + 1 , right]
 
 		PrintArrway(a, 10);
@@ -261,10 +310,45 @@ void QuickSort(int* a, int left, int right)
 		QuickSort(a, left, div - 1);
 		QuickSort(a, div + 1, right);
 	}
+	//小于十个数中断，此时已经相对有序，用插入排序
+	else
+	{
+		//将数组地址跳到left的位置；
+		InsertSort(a + left, right - left + 1);
+	}
 }
 
 //快速排序非递归实现
-void QuickSortNonR(int* a, int left, int right);
+void QuickSortNonR(int* a, int left, int right)
+{
+	//创建一个栈
+	Stack st;
+	StackInit(&st);
+	StackPush(&st, right);
+	StackPush(&st, left);
+
+	while (!StackEmpty(&st))
+	{
+		int begin = StackTop(&st);
+		StackPop(&st);
+		int end = StackTop(&st);
+		StackPop(&st);
+
+		int div = PartSort3(a, begin, end);
+
+		if (div + 1 < end)
+		{
+			StackPush(&st, end);
+			StackPush(&st, div + 1);
+		}
+		if (div - 1 > begin)
+		{
+			StackPush(&st, div - 1);
+			StackPush(&st, begin);
+		}
+	}
+	PrintArrway(a, right + 1);
+}
 
 //归并排序 递归实现
 void MergerSort(int* a, int n);
