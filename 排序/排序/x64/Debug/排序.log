@@ -1,3 +1,3 @@
 ﻿  Sort.c
-C:\Users\96241\OneDrive\C\程序\排序\排序\Sort.c(273): warning C4716: “PartSort2”: 必须返回一个值
+C:\Users\96241\OneDrive\C\程序\排序\排序\Sort.c(274): warning C4716: “PartSort2”: 必须返回一个值
   排序.vcxproj -> C:\Users\96241\OneDrive\C\程序\排序\x64\Debug\排序.exe

@@ -16,6 +16,7 @@ void PrintArrway(int* a, int n)
 	{
 		printf("%d", a[i]);
 	}
+	printf("\n");
 }
 
 
@@ -347,13 +348,79 @@ void QuickSortNonR(int* a, int left, int right)
 			StackPush(&st, begin);
 		}
 	}
-	PrintArrway(a, right + 1);
+	StackDestroy(&st);
+	//PrintArrway(a, right + 1);
 }
 
-//归并排序 递归实现
-void MergerSort(int* a, int n);
+//归并排序
+
+void MergeArr(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
+{
+	int cut = 0;
+	int left = begin1;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (a[begin1] <= a[begin2])
+			tmp[cut++] = a[begin1++];
+		else
+			tmp[cut++] = a[begin2++];
+	}
+	while (begin1 <= end1)
+		tmp[cut++] = a[begin1++];
+	while (begin2 <= end2)
+		tmp[cut++] = a[begin2++];
+
+	memcpy(a + left, tmp, sizeof(int) * cut);
+}
+
+void _MergerSort(int* a, int left, int right, int* tmp)
+{
+	if (left >= right)
+		return;
+
+	int mid = (right + left) / 2;
+	_MergerSort(a, left, mid, tmp);
+	_MergerSort(a, mid+1, right, tmp);
+	MergeArr(a, left, mid, mid + 1, right, tmp);
+}
+
+//递归实现
+void MergerSort(int* a, int n)
+{
+	assert(a);
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	_MergerSort(a, 0, n - 1, tmp);
+
+
+	free(tmp);
+	tmp = NULL;
+	PrintArrway(a, n);
+
+}
 //归并排序 非递归实现
-void MergeSortNonR(int* a, int n);
+void MergeSortNonR(int* a, int n)
+{
+	assert(a);
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	int gap = 1;
+	while (gap <= n)
+	{
+		for (int i = 0; i < n; i += 2 * gap)
+		{
+			int begin1 = i;
+			int end1 = i + gap - 1;
+			int begin2 = i + gap;
+			int end2 = i + 2 * gap - 1;
+			if (begin2 >= n)
+				break;
+			if (end2 >= n)
+				end2 = n - 1;
+			MergeArr(a, begin1, end1, begin2, end2, tmp);
+		}
+		PrintArrway(a, n);
+		gap *= 2;
+	}
+}
 
 //计数排序
 void CountSort(int* a, int n);
