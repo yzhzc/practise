@@ -14,7 +14,7 @@ void PrintArrway(int* a, int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		printf("%d", a[i]);
+		printf("%d ", a[i]);
 	}
 	printf("\n");
 }
@@ -354,10 +354,12 @@ void QuickSortNonR(int* a, int left, int right)
 
 //归并排序
 
+//归并到tmp
 void MergeArr(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
 {
 	int cut = 0;
 	int left = begin1;
+	//将左右区间数据相互比较，小的放入tmp，直到其中一个区间空
 	while (begin1 <= end1 && begin2 <= end2)
 	{
 		if (a[begin1] <= a[begin2])
@@ -365,11 +367,12 @@ void MergeArr(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
 		else
 			tmp[cut++] = a[begin2++];
 	}
+	//将剩余的那个区间里的数依次接着存入tmp
 	while (begin1 <= end1)
 		tmp[cut++] = a[begin1++];
 	while (begin2 <= end2)
 		tmp[cut++] = a[begin2++];
-
+	//将归并好的tmp拷贝到原始数组对应位置
 	memcpy(a + left, tmp, sizeof(int) * cut);
 }
 
@@ -397,6 +400,7 @@ void MergerSort(int* a, int n)
 	PrintArrway(a, n);
 
 }
+
 //归并排序 非递归实现
 void MergeSortNonR(int* a, int n)
 {
@@ -417,10 +421,125 @@ void MergeSortNonR(int* a, int n)
 				end2 = n - 1;
 			MergeArr(a, begin1, end1, begin2, end2, tmp);
 		}
-		PrintArrway(a, n);
 		gap *= 2;
 	}
+	PrintArrway(a, n);
 }
 
-//计数排序
-void CountSort(int* a, int n);
+
+//文件内容排序
+
+//读取两个文件并归并到mfile
+void _MergeFile(const char* file1, const char* file2, const char* mfile)
+{
+	FILE* data1 = fopen(file1, "r");
+	if (data1 == NULL)
+	{
+		printf("打开文件失败");
+		exit(-1);
+	}
+	FILE* data2 = fopen(file2, "r");
+	if (data2 == NULL)
+	{
+		printf("打开文件失败");
+		exit(-1);
+	}
+	FILE* fin = fopen(mfile, "w");
+	if (fin == NULL)
+	{
+		printf("打开文件失败");
+		exit(-1);
+	}
+
+	int num1, num2;
+	int ret1 = fscanf(data1, "%d\n", &num1);
+	int ret2 = fscanf(data2, "%d\n", &num2);
+	while (ret1 != EOF && ret2 != EOF)
+	{
+		if (num1 < num2)
+		{
+			fprintf(fin, "%d\n", num1);
+			ret1 = fscanf(data1, "%d\n", &num1);
+		}
+		else
+		{
+			fprintf(fin, "%d\n", num2);
+			ret2 = fscanf(data2, "%d\n", &num2);
+		}
+	}
+
+	while (ret1 != EOF)
+	{
+		fprintf(fin, "%d\n", num1);
+		ret1 = fscanf(data1, "%d\n", &num1);
+	}
+	while (ret2 != EOF)
+	{
+		fprintf(fin, "%d\n", num2);
+		ret2 = fscanf(data2, "%d\n", &num2);
+	}
+
+	fclose(data1);
+	fclose(data2);
+	fclose(fin);
+}
+
+//文件排序
+void FileSort(int* a, int n)
+{
+	assert(a);
+	int cut = 0;
+	int size = 10;
+	int tmp[10];
+	int i = 0;
+	char subfile[15];
+	int filei = 0;
+	while (cut < n)
+	{
+		if (i < size)
+		{
+			tmp[i++] = a[cut++];
+		}
+		else
+		{
+			QuickSort(tmp, 0, size - 1);
+			sprintf(subfile, "sub\\sub_sort%d", filei++);
+			FILE* fin = fopen(subfile, "w");
+			for (int i = 0; i < size; i++)
+			{
+				fprintf(fin, "%d\n", tmp[i]);
+			}
+			fclose(fin);
+			i = 0;
+		}
+	}
+	if (i > 0)
+	{
+		QuickSort(tmp, 0, i-1);
+		sprintf(subfile, "sub\\sub_sort%d", filei++);
+		FILE* fin = fopen(subfile, "w");
+		for (int j = 0; j < i; j++)
+		{
+			fprintf(fin, "%d\n", tmp[j]);
+		}
+		fclose(fin);
+	}
+
+	char mfile[100];
+	char file1[100] = {"sub\\sub_sort0"};
+	char file2[100];
+
+	cut = n / size;
+	if (n % size != 0)
+		cut++;
+
+	for (i = 1; i < cut; i++)
+	{
+		//将下一个文件名给file2
+		sprintf(file2, "sub\\sub_sort%d", i);
+		sprintf(mfile, "sub\\0 %d", i);
+
+		_MergeFile(file1, file2, mfile);
+		strcpy(file1, mfile);
+	}
+}

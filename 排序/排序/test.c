@@ -3,8 +3,8 @@
 
 int main()
 {
-	int arr[] = { 6,9,3,0,1,8,2,5,4,7,6,9,3,0,1,8,2,5,4,7 };
-	MergeSortNonR(arr,sizeof(arr) / sizeof(int));
+	int arr[] = {9,8,7,6,5,4,3,2,1,0,12,13,14,15,16,17,18,19,112,113,114,115,1116,1117,1118,1119};
+	FileSort(arr, sizeof(arr) / sizeof(int));
 
 
 

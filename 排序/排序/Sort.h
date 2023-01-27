@@ -1,4 +1,5 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -38,6 +39,9 @@ void QuickSortNonR(int* a, int left, int right);
 void MergerSort(int* a, int n);
 //归并排序 非递归实现
 void MergeSortNonR(int* a, int n);
+
+//存放到硬盘排序
+void FileSort(int* a, int n);
 
 //计数排序
 void CountSort(int* a, int n);
