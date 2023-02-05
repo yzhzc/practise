@@ -1,2 +1,5 @@
-﻿  test.cpp
+﻿  date.cpp
+  test.cpp
+  正在生成代码...
+C:\Users\96241\OneDrive\C++\程序\日期计算\日期计算\date.cpp(181): warning C4172: 返回局部变量或临时变量的地址: ret
   日期计算.vcxproj -> C:\Users\96241\OneDrive\C++\程序\日期计算\x64\Debug\日期计算.exe
