@@ -44,7 +44,7 @@ public:
 	//«∞÷√--
 	Date& operator--();
 	//∫Û÷√--
-	Date& operator--(int);
+	Date operator--(int);
 
 	int operator-(const Date& d) const;
 

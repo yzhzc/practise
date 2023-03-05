@@ -173,7 +173,7 @@ Date& Date::operator--()
 }
 
 //∫Û÷√--
-Date& Date::operator--(int)
+Date Date::operator--(int)
 {
 	Date ret(*this);
 	*this -= 1;
