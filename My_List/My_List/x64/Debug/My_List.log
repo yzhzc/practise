@@ -1,2 +1,6 @@
 ﻿  test.cpp
-  My_List.vcxproj -> C:\Users\96241\OneDrive\C++\程序\My_List\x64\Debug\My_List.exe
+C:\Users\96241\OneDrive\C++\程序\My_List\My_List\list.h(139,4): error C3861: “swap”: 找不到标识符
+C:\Users\96241\OneDrive\C++\程序\My_List\My_List\list.h(139,4): message : “swap”: 函数未在模板定义上下文中声明，只能通过实例化上下文中参数相关的查找找到
+C:\Users\96241\OneDrive\C++\程序\My_List\My_List\list.h(129,1): message : 在编译 类 模板 成员函数“My_List::list<int> &My_List::list<int>::operator =(My_List::list<int> &)”时
+C:\Users\96241\OneDrive\C++\程序\My_List\My_List\test.cpp(71,5): message : 查看对正在编译的函数 模板 实例化“My_List::list<int> &My_List::list<int>::operator =(My_List::list<int> &)”的引用
+C:\Users\96241\OneDrive\C++\程序\My_List\My_List\test.cpp(19,28): message : 查看对正在编译的 类 模板 实例化“My_List::list<int>”的引用
